@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelperBee | Text Transformer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-amber-50 text-slate-800 font-sans min-h-screen">
+
+    <nav class="p-6 bg-white shadow-sm">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold flex items-center gap-2">🐝 <span class="text-amber-500">HelperBee</span></h1>
+            <p class="italic text-sm text-slate-500 underline">Small tools, big help.</p>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto py-12 px-6">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-bold mb-4 text-slate-900">Text Transformer ✍️</h2>
+            <p class="text-slate-600 italic">Clean, format, and track your text in real-time.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl shadow-xl border-2 border-amber-200">
+            <div class="flex gap-4 mb-2 ml-2 text-sm font-bold text-amber-600">
+                <span id="charCount">0 Characters</span>
+                <span id="wordCount">0 Words</span>
+            </div>
+
+            <textarea id="userInput" oninput="updateStats()" rows="8"
+                class="w-full p-4 rounded-2xl border-2 border-slate-100 focus:border-amber-400 outline-none mb-6 text-lg"
+                placeholder="Type or paste text here..."></textarea>
+
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <button onclick="runBee('upper')"
+                    class="bg-amber-400 hover:bg-amber-500 text-white font-bold py-3 rounded-xl shadow-md uppercase text-sm transition-all active:scale-95">Uppercase</button>
+                <button onclick="runBee('lower')"
+                    class="bg-amber-400 hover:bg-amber-500 text-white font-bold py-3 rounded-xl shadow-md lowercase text-sm transition-all active:scale-95">Lowercase</button>
+                <button onclick="runBee('clean')"
+                    class="bg-slate-700 hover:bg-slate-800 text-white font-bold py-3 rounded-xl shadow-md text-sm transition-all active:scale-95">Fix
+                    Spaces</button>
+                <button onclick="copyText()"
+                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl shadow-md text-sm transition-all active:scale-95">Copy
+                    Result</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const box = document.getElementById('userInput');
+
+        function updateStats() {
+            const text = box.value.trim();
+            document.getElementById('charCount').innerText = box.value.length + " Characters";
+            // Word count logic
+            const words = text ? text.split(/\s+/).length : 0;
+            document.getElementById('wordCount').innerText = words + " Words";
+        }
+
+        function runBee(type) {
+            if (type === 'upper') box.value = box.value.toUpperCase();
+            if (type === 'lower') box.value = box.value.toLowerCase();
+            if (type === 'clean') box.value = box.value.replace(/\s+/g, ' ').trim();
+            updateStats();
+        }
+
+        function copyText() {
+            if (box.value.length === 0) return;
+            box.select();
+            navigator.clipboard.writeText(box.value);
+            alert("Copied to clipboard! 🐝");
+        }
+    </script>
+
+</body>
+
+</html>
